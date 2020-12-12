@@ -1,0 +1,6 @@
+#power of the explosion
+#try to keep it reasonable, so you don't crash your server
+explosion-power: 5
+
+#If you want the explosions to have fire, like in ghasts for example
+explosion-fire: true

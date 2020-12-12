@@ -4,3 +4,6 @@ explosion-power: 5
 
 #If you want the explosions to have fire, like in ghasts for example
 explosion-fire: true
+
+#If you want a cool lightning effect whenever an arrow hits
+explosion-lightning: true

@@ -11,13 +11,14 @@ public class ArrowCollideEvent implements Listener {
     /*
     TODO
     - add a configuration option for the explosions to ignore the player that fired the arrow
-     
+
      */
 
 
     //getting custom user variables from configuration file
     int power = Main.getPlugin().getConfig().getInt("explosion-power");
     boolean isFireOn = Main.getPlugin().getConfig().getBoolean("explosion-fire");
+    boolean isLightningOn = Main.getPlugin().getConfig().getBoolean("explosion-lightning");
 
     //calling event for when a block is shot
     @EventHandler
@@ -27,6 +28,9 @@ public class ArrowCollideEvent implements Listener {
             //getting arrow hit position
             if (e.getEntity().getLocation() != null) {
                 Location blockPos = e.getEntity().getLocation();
+                if (isLightningOn) {
+                    spawnLightning(blockPos);
+                }
                 spawnExplosion(blockPos);
                 e.getEntity().remove();
             }
@@ -38,6 +42,9 @@ public class ArrowCollideEvent implements Listener {
     public void onEntityShot(EntityDamageByEntityEvent e) {
         if (e.getDamager().getType().equals(EntityType.ARROW)) {
             Location locale = e.getEntity().getLocation();
+            if (isLightningOn) {
+                spawnLightning(locale);
+            }
             spawnExplosion(locale);
             e.getDamager().remove();
         }
@@ -45,5 +52,9 @@ public class ArrowCollideEvent implements Listener {
 
     public void spawnExplosion(Location loc) {
         loc.getWorld().createExplosion(loc,power,isFireOn);
+    }
+
+    public void spawnLightning(Location loc) {
+        loc.getWorld().strikeLightning(loc);
     }
 }
